@@ -59,15 +59,15 @@ Code for myself
 
 ## service planning：
 
-	| module name                               | port  | describe                             | 
-	| ------------------------------------------| ------| ------------------------------------ | 
-	| news-service-registry                		| 8671  | Service Register And Discovery Center|
-	| news-config-server               			| 8672  | config center                        |
-	| news-gateway               				| 8673  | api gateway                		   | 
-	| news-auth-server        					| 8674  | Authorization server                 |
-	| news-resource-server 						| 8675  | Resource Server                      |
-	| news-web-app 								| 8676  | App controller                       |
-	| news-web-admin       						| 8677  | Admin controller                     |
-	| news-ms-support 							| 8678  | Support service                      |
-	| news-ms-content           				| 8679  | Content service                      |
+| module name                               | port  | describe                             | 
+| ------------------------------------------| ------| ------------------------------------ | 
+| news-service-registry                	    | 8671  | Service Register And Discovery Center|
+| news-config-server               	    | 8672  | config center                        |
+| news-gateway               		    | 8673  | api gateway                	   | 
+| news-auth-server        		    | 8674  | Authorization server                 |
+| news-resource-server 			    | 8675  | Resource Server                      |
+| news-web-app 				    | 8676  | App controller                       |
+| news-web-admin       			    | 8677  | Admin controller                     |
+| news-ms-support 			    | 8678  | Support service                      |
+| news-ms-content           		    | 8679  | Content service                      |
 

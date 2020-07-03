@@ -11,6 +11,14 @@ Code for myself
 * <a href="#1">Use </a>
 * <a href="#1">Code coverage report</a>
 
+## environment：
+
+	| Tools | version & describe               |
+	| ----- | -------------------------------- |
+	| JDK   | 1.8                              |
+	| IDE   | eclipse/sts/idea				   |
+	| Maven | 3.x  							   |
+
 ## Technology stack
 
 * Spring boot 2.1.6.Release
@@ -48,3 +56,18 @@ Code for myself
 	- news-ms-layer (*Micro Service*)
 		- news-ms-support (*Support Service*)
 		- news-ms-content (*Content Service*)
+
+## service planning：
+
+	| module name                               | port  | describe                             | 
+	| ------------------------------------------| ------| ------------------------------------ | 
+	| news-service-registry                		| 8671  | Service Register And Discovery Center|
+	| news-config-server               			| 8672  | config center                        |
+	| news-gateway               				| 8673  | api gateway                		   | 
+	| news-auth-server        					| 8674  | Authorization server                 |
+	| news-resource-server 						| 8675  | Resource Server                      |
+	| news-web-app 								| 8676  | App controller                       |
+	| news-web-admin       						| 8677  | Admin controller                     |
+	| news-ms-support 							| 8678  | Support service                      |
+	| news-ms-content           				| 8679  | Content service                      |
+

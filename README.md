@@ -24,15 +24,15 @@ Code for myself
 
 ## <a name="1">Architectural</a>
 
-![platform](architecture.jpg)
+![platform](./architecture.svg)
 
 ## App User flow path
 
-![flow](./appflow.jpg)
+![flow](./appflow.svg)
 
 ## Admin User flow path
 
-![flow](./adminflow.jpg)
+![flow](./adminflow.svg)
 
 ## Modules
   

@@ -24,7 +24,7 @@ Code for myself
 
 ## <a name="1">Architectural</a>
 
-![platform](./architecture.jpg)
+![platform](architecture.jpg)
 
 ## App User flow path
 

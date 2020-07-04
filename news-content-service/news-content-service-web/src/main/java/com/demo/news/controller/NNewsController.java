@@ -2,6 +2,7 @@ package com.demo.news.controller;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,7 @@ import com.demo.web.ResponseMessage;
 
 /**
  * <p>
- *  NNewsController
+ *  News Controller
  * </p>
  *
  * @author Larry_lee
@@ -60,8 +61,17 @@ public class NNewsController {
 	@PatchMapping
 	public ResponseMessage<String> addNews(@Validated @RequestBody NNews news){
 		// add news
-		newsService.save(news);
-		return ResponseMessage.ok();
+		NNews realNews = newsService.query()
+				.eq("n_id", news.getNId())
+				.getEntity();
+		if(realNews == null) {
+			return ResponseMessage.error(" cann't find news[" + news.getNId() + "]");
+		} else {
+			newsService.save(news);
+			return ResponseMessage.ok();
+		}
+		
+		
 	}
 	
 	/**
@@ -71,6 +81,8 @@ public class NNewsController {
 	@PutMapping
 	public ResponseMessage<String> updateNews(@Validated @RequestBody NNews news){
 		// update news
+		Objects.nonNull(news.getNId());
+		
 		newsService.save(news);
 		return ResponseMessage.ok();
 	}

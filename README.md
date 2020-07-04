@@ -9,8 +9,9 @@ Code for myself
 * <a href="#3">Admin User flow path</a>
 * <a href="#4">Modules</a>
 * <a href="#5">Service plan</a>
-* <a href="#6">How To Run</a>
-* <a href="#7">Code coverage report</a>
+* <a href="#6">Database</a>
+* <a href="#7">How To Run</a>
+* <a href="#8">Code coverage report</a>
 
 ## environment：
 
@@ -72,6 +73,34 @@ Code for myself
 | news-ms-support 			    | 8678  | Support service                      |
 | news-ms-content           		    | 8679  | Content service                      |
 
-## <a name="6">How to Run</a>
+## <a name="6">Database</a>(<a href="./db/newsdb-init.sql">sql here</a>)
 
-## <a name="7">Code coverage report</a>
+* n_user(user information)
+
+| field name                              	| type          | describe                             | 
+| ------------------------------------------| --------------| ------------------------------------ | 
+| n_id                	    				| bigint  	    | unique id(not null)				   |
+| n_account               	    			| varchar(50)   | user account(not null)               |
+| n_password               		    		| varchar(100)  | user password encrypt(not null)      | 
+| n_type        		    				| enum		    | user type enum(APP,ADMIN)            |
+| n_create 			    					| datetime	    | create time(default current time)    |
+| n_create_by 				    			| varchar(50)   | create by 	                       |
+| n_modified       			    			| datetime  	| modified time  		               |
+| n_modified_by 			    			| varchar(50)  	| modified by       	               |
+
+* n_news(news )
+
+| field name                              	| type          | describe                             | 
+| ------------------------------------------| --------------| ------------------------------------ | 
+| n_id                	    				| bigint  	    | unique id(not null)				   |
+| n_title               	    			| varchar(50)   | news title(not null)                 |
+| n_tag		               		    		| varchar(100)  | news tags  						   | 
+| n_content        		    				| text		    | news content(not null)   			   |
+| n_create 			    					| datetime	    | create time(default current time)    |
+| n_create_by 				    			| varchar(50)   | create by 	                       |
+| n_modified       			    			| datetime  	| modified time  		               |
+| n_modified_by 			    			| varchar(50)  	| modified by       	               |
+
+## <a name="7">How to Run</a>
+
+## <a name="8">Code coverage report</a>

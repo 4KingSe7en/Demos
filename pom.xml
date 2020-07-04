@@ -134,5 +134,6 @@
 		<module>news-auth-server</module>
 		<module>news-user-service</module>
 		<module>news-web-framework</module>
+		<module>news-content-service</module>
 	</modules>
 </project>

@@ -4,17 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.demos</groupId>
-		<artifactId>news-user-service</artifactId>
+		<artifactId>news-content-service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>news-user-service-local</artifactId>
-
+	<artifactId>news-content-service-local</artifactId>
 	<dependencies>
-		<dependency>
-			<groupId>com.demos</groupId>
-			<artifactId>news-user-service-api</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-core</artifactId>
@@ -24,10 +18,9 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
+			<groupId>com.demos</groupId>
+			<artifactId>news-content-service-api</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,0 +1,19 @@
+server:
+  port: 8678
+spring:
+  application:
+    name: ms-support
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/news?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver   
+    
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.hostname}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/

@@ -26,14 +26,14 @@
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 		</dependency>
-		<!-- <dependency>
-			<groupId>cn.demo</groupId>
+		<dependency>
+			<groupId>com.demos</groupId>
 			<artifactId>news-user-service-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>cn.demo</groupId>
+			<groupId>com.demos</groupId>
 			<artifactId>news-user-service-local</artifactId>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-generator</artifactId>

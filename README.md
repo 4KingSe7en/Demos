@@ -5,11 +5,12 @@
 Code for myself
 
 * <a href="#1">Architectural</a>
-* <a href="#1">App User flow path</a>
-* <a href="#1">Admin User flow path</a>
-* <a href="#1">Modules</a>
-* <a href="#1">Use </a>
-* <a href="#1">Code coverage report</a>
+* <a href="#2">App User flow path</a>
+* <a href="#3">Admin User flow path</a>
+* <a href="#4">Modules</a>
+* <a href="#5">Service plan</a>
+* <a href="#6">How To Run</a>
+* <a href="#7">Code coverage report</a>
 
 ## environment：
 
@@ -34,15 +35,15 @@ Code for myself
 
 ![platform](./architecture.svg)
 
-## App User flow path
+## <a name="2">App User flow path</a>
 
 ![flow](./appflow.svg)
 
-## Admin User flow path
+## <a name="3">Admin User flow path</a>
 
 ![flow](./adminflow.svg)
 
-## Modules
+## <a name="4">Modules</a>
   
 - news-parent
 	- news-service-registry (*Service Register And Discovery Center*)
@@ -57,7 +58,7 @@ Code for myself
 		- news-ms-support (*Support Service*)
 		- news-ms-content (*Content Service*)
 
-## service planning：
+## <a name="5">Service plan</a>
 
 | module name                               | port  | describe                             | 
 | ------------------------------------------| ------| ------------------------------------ | 
@@ -71,3 +72,6 @@ Code for myself
 | news-ms-support 			    | 8678  | Support service                      |
 | news-ms-content           		    | 8679  | Content service                      |
 
+## <a name="6">How to Run</a>
+
+## <a name="7">Code coverage report</a>

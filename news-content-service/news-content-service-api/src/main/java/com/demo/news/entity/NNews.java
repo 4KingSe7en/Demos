@@ -2,13 +2,17 @@ package com.demo.news.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 /**
  * <p>
- * 
+ *  new entity
  * </p>
  *
  * @author Larry_lee
@@ -30,6 +34,8 @@ public class NNews implements Serializable {
     /**
      * news title
      */
+    @NotBlank(message = "Title is require")
+	@Size(min = 1,max = 20, message = "title length must between [1,40]")
     private String nTitle;
 
     /**
@@ -40,6 +46,7 @@ public class NNews implements Serializable {
     /**
      * news content
      */
+    @NotBlank(message = "Title is require")
     private String nContent;
 
     /**

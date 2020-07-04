@@ -1,11 +1,11 @@
 package com.demo.news.service;
 
-import com.demo.news.entity.NNews;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.demo.news.entity.NNews;
 
 /**
  * <p>
- *  服务类
+ *  news service
  * </p>
  *
  * @author Larry_lee

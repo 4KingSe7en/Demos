@@ -10,8 +10,17 @@
 	<artifactId>news-content-service-web</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>com.demos</groupId>
+			<artifactId>news-content-service-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.demos</groupId>
+			<artifactId>news-web-framework</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

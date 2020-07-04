@@ -133,5 +133,6 @@
 		<module>news-gateway</module>
 		<module>news-auth-server</module>
 		<module>news-user-service</module>
+		<module>news-web-framework</module>
 	</modules>
 </project>

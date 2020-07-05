@@ -1,18 +1,13 @@
 package com.demo.controller;
 
-import java.util.Date;
-
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import com.demo.jwt.JWTTokenGenerator;
 import com.demo.param.UserParam;
 import com.demo.user.enmu.UserType;
 import com.demo.user.entity.User;
@@ -28,13 +23,8 @@ import com.demo.web.ResponseMessage;
 @RequestMapping
 public class LoginController {
 	
-	final static String USER_CLAIM = "name";
-	
 	@Autowired
-	Algorithm algorithm;
-	
-	@Value("${server.jwt.expire:5}")
-	int expireTime;
+	JWTTokenGenerator jtGenerator;
 	
 	@Autowired
 	SupportServiceClient supportServiceClient;
@@ -48,16 +38,9 @@ public class LoginController {
 		sysUser.setType(UserType.valueOf(user.getUserType()));
 		
 		ResponseMessage<String> resp = supportServiceClient.userLogin(sysUser);
-		Date now = new Date();
 		if(resp.getCode() == 200) {
 			// login success
-			String token = JWT.create()
-		            .withIssuer("SPH")    
-		            .withIssuedAt(now)
-		            // defa
-		            .withExpiresAt(DateUtils.addSeconds(now, expireTime))
-		            .withClaim(USER_CLAIM,user.getAccount()) 
-		            .sign(algorithm);
+			String token = jtGenerator.getOrCreat(user.getAccount());
 			resp.setResult(token);
 		}
 		return resp;

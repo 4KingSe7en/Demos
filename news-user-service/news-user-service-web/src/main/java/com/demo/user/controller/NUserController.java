@@ -4,6 +4,7 @@ package com.demo.user.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,7 @@ public class NUserController {
 	 * user login 
 	 * @return
 	 */
+	@PostMapping("/login")
 	public ResponseMessage<String> userLogin(@Validated @RequestBody NUser user ){
 		NUser realUser = userService.query()
 				.eq("n_account", user.getNAccount())
@@ -51,6 +53,7 @@ public class NUserController {
 	 * user regist 
 	 * @return
 	 */
+	@PostMapping("/regist")
 	public ResponseMessage<String> userRegist(@Validated @RequestBody NUser user){
 		int count = userService.query()
 				.eq("n_account", user.getNAccount())

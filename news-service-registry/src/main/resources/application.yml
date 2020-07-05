@@ -1,9 +1,16 @@
 server:
   port: 8761
+
+spring:
+  application:
+    name: service-registry
+    
 eureka:
   instance:
     hostname: localhost
     prefer-ip-address: true
+    status-page-url-path: /info
+    health-check-url-path: /health
   client:
     fetch-registry: false
     register-with-eureka: false
@@ -12,8 +19,5 @@ eureka:
     enable-self-preservation: true
     eviction-interval-timer-in-ms: 5000
     
-spring:
-  application:
-    name: service-registry
     
 

@@ -14,9 +14,18 @@ import lombok.EqualsAndHashCode;
 @Data
 public class PageResultEntity<T> extends PageSupport<T> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private T data;
 	
 	private int total;
+	
+	public PageResultEntity() {
+		
+	}
 	
 	public PageResultEntity(T data ,int total) { 
 		this.data = data;

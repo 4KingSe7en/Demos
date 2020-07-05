@@ -13,7 +13,9 @@ eureka:
   instance:
     hostname: localhost
     prefer-ip-address: true
-    instance-id: ${eureka.instance.hostname}:${server.port}
+    #instance-id: ${eureka.instance.hostname}:${server.port}
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
   client:
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/

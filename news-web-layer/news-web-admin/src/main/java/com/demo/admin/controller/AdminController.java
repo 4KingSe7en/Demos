@@ -1,13 +1,21 @@
 package com.demo.admin.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.news.entity.NNews;
+import com.demo.news.feign.ContentServiceClient;
+import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
 
 /**
@@ -19,14 +27,19 @@ import com.demo.web.ResponseMessage;
 @RequestMapping("/admin")
 public class AdminController {
 	
+	@Autowired
+	ContentServiceClient contentServiceClient;
+	
 	/**
 	 * get news by page
 	 * @return
 	 */
 	@GetMapping("/news")
-	public ResponseMessage<String> getNewsList(){
+	public ResponseMessage<PageResultEntity<List<NNews>>> getNewsList(
+			@RequestParam(defaultValue = "1") Integer pageNum, 
+            @RequestParam(defaultValue = "10") Integer pageSize){
 		
-		return ResponseMessage.ok();
+		return contentServiceClient.getNewsList(pageNum, pageSize);
 	}
 	
 	
@@ -35,9 +48,9 @@ public class AdminController {
 	 * @return
 	 */
 	@PatchMapping("/news")
-	public ResponseMessage<String> addNews(){
+	public ResponseMessage<String> addNews(@RequestBody NNews news){
 		
-		return ResponseMessage.ok();
+		return contentServiceClient.addNews(news);
 	}
 	
 	/**
@@ -45,9 +58,9 @@ public class AdminController {
 	 * @return
 	 */
 	@PutMapping("/news")
-	public ResponseMessage<String> updateNews(){
+	public ResponseMessage<String> updateNews(@RequestBody NNews news){
 		
-		return ResponseMessage.ok();
+		return contentServiceClient.updateNews(news);
 	}
 	
 	/**
@@ -57,7 +70,7 @@ public class AdminController {
 	@DeleteMapping("/news/{id}")
 	public ResponseMessage<String> deleteNews(@PathVariable("id") Long id){
 		
-		return ResponseMessage.ok();
+		return contentServiceClient.deleteNews(id);
 	}
 	
 	/**
@@ -65,9 +78,9 @@ public class AdminController {
 	 * @return
 	 */
 	@GetMapping("/news/{id}")
-	public ResponseMessage<String> getNews(@PathVariable("id") Long id){
+	public ResponseMessage<NNews> getNews(@PathVariable("id") Long id){
 		
-		return ResponseMessage.ok();
+		return contentServiceClient.getNews(id);
 	}
 	
 

@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author Larry_lee
  * @since 2020-07-04
  */
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.demo.news")
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ContentApplication {

@@ -12,5 +12,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 @Data
 public class PageSearchEntity<T> extends PageSupport<T> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private T condition;
 }

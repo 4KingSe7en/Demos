@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.user.entity.NUser;
-import com.demo.user.service.INUserService;
+import com.demo.user.entity.User;
+import com.demo.user.service.IUserService;
 import com.demo.web.ResponseMessage;
 
 /**
@@ -23,10 +23,10 @@ import com.demo.web.ResponseMessage;
  */
 @RestController
 @RequestMapping("/user")
-public class NUserController {
+public class UserController {
 	
 	@Autowired
-	INUserService userService;
+	IUserService userService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -36,13 +36,11 @@ public class NUserController {
 	 * @return
 	 */
 	@PostMapping("/login")
-	public ResponseMessage<String> userLogin(@Validated @RequestBody NUser user ){
-		NUser realUser = userService.query()
-				.eq("n_account", user.getNAccount())
-				.getEntity();
+	public ResponseMessage<String> userLogin(@Validated @RequestBody User user ){
+		User realUser = userService.queryUserByAccount(user.getAccount());
 		if(realUser == null) {
-			return ResponseMessage.error("account["+user.getNAccount()+"] not exist");
-		} else if(passwordEncoder.matches(user.getNPassword(), realUser.getNPassword())){
+			return ResponseMessage.error("account["+user.getAccount()+"] not exist");
+		} else if(passwordEncoder.matches(user.getPwd(), realUser.getPwd())){
 			return ResponseMessage.ok();
 		}
 		return ResponseMessage.error("account or password not correct");
@@ -54,18 +52,18 @@ public class NUserController {
 	 * @return
 	 */
 	@PostMapping("/regist")
-	public ResponseMessage<String> userRegist(@Validated @RequestBody NUser user){
+	public ResponseMessage<String> userRegist(@Validated @RequestBody User user){
 		int count = userService.query()
-				.eq("n_account", user.getNAccount())
+				.eq("n_account", user.getAccount())
 				.count();
 		// account not exist
 		if(count == 0) {
-			user.setNPassword(passwordEncoder.encode(user.getNPassword()));
+			user.setPwd(passwordEncoder.encode(user.getPwd()));
 			userService.save(user);
 			return ResponseMessage.ok();
 		} else {
 			// already exist
-			return ResponseMessage.error("account["+user.getNAccount()+"] already exist");
+			return ResponseMessage.error("account["+user.getAccount()+"] already exist");
 		}
 		
 	}

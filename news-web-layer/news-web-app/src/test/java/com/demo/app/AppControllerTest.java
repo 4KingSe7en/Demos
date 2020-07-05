@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.app.controller.AppController;
-import com.demo.news.entity.NNews;
+import com.demo.news.entity.News;
 import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
 
@@ -33,14 +33,14 @@ public class AppControllerTest {
 
 	@Test
 	public void getNewsListTest() {
-		ResponseMessage<PageResultEntity<List<NNews>>> resp = appController.getNewsList(1,10);
+		ResponseMessage<PageResultEntity<List<News>>> resp = appController.getNewsList(1,10);
 		logger.info("{}",resp);
 		assertNotNull(resp);
 	}
 	
 	@Test
 	public void getNewsTest() {
-		ResponseMessage<NNews> resp = appController.getNewsDetail(200L);
+		ResponseMessage<News> resp = appController.getNewsDetail(200L);
 		logger.info("{}",resp);
 		assertNotNull(resp);
 	}

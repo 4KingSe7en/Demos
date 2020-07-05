@@ -1,0 +1,8 @@
+server:
+  port: 8677
+spring:
+  application:
+    name: admin-web
+  cloud:    config:
+      uri: http://127.0.0.1:8672
+      label: master

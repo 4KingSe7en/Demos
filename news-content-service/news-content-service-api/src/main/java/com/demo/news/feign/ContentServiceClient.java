@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.demo.news.entity.NNews;
+import com.demo.news.entity.News;
 import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
 
@@ -23,7 +23,7 @@ public interface ContentServiceClient {
 	 * @return
 	 */
 	@GetMapping("/news/list")
-	ResponseMessage<PageResultEntity<List<NNews>>> getNewsList(
+	ResponseMessage<PageResultEntity<List<News>>> getNewsList(
 			@RequestParam(defaultValue = "1") Integer pageNum,
 			@RequestParam(defaultValue = "10") Integer pageSize);
 
@@ -33,7 +33,7 @@ public interface ContentServiceClient {
 	 * @return
 	 */
 	@PatchMapping("/news")
-	ResponseMessage<String> addNews(NNews news);
+	ResponseMessage<String> addNews(News news);
 
 	/**
 	 * add news
@@ -41,7 +41,7 @@ public interface ContentServiceClient {
 	 * @return
 	 */
 	@PutMapping("/news")
-	ResponseMessage<String> updateNews(NNews news);
+	ResponseMessage<String> updateNews(News news);
 
 	/**
 	 * delete news by id
@@ -57,6 +57,6 @@ public interface ContentServiceClient {
 	 * @return
 	 */
 	@GetMapping("/news/{id}")
-	ResponseMessage<NNews> getNews(@PathVariable("id") Long id);
+	ResponseMessage<News> getNews(@PathVariable("id") Long id);
 
 }

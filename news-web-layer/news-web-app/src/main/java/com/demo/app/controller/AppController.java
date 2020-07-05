@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.news.entity.NNews;
+import com.demo.news.entity.News;
 import com.demo.news.feign.ContentServiceClient;
 import com.demo.param.PageResultEntity;
 import com.demo.user.enmu.UserType;
-import com.demo.user.entity.NUser;
+import com.demo.user.entity.User;
 import com.demo.user.feign.SupportServiceClient;
 import com.demo.web.ResponseMessage;
 
@@ -40,7 +40,7 @@ public class AppController {
 	 * @return
 	 */
 	@GetMapping("/news")
-	public ResponseMessage<PageResultEntity<List<NNews>>> getNewsList(
+	public ResponseMessage<PageResultEntity<List<News>>> getNewsList(
 			@RequestParam(defaultValue = "1") Integer pageNum,
 			@RequestParam(defaultValue = "10") Integer pageSize) {
 
@@ -53,7 +53,7 @@ public class AppController {
 	 * @return
 	 */
 	@GetMapping("/news/{id}")
-	public ResponseMessage<NNews> getNewsDetail(@PathVariable("id") Long id) {
+	public ResponseMessage<News> getNewsDetail(@PathVariable("id") Long id) {
 
 		return contentServiceClient.getNews(id);
 	}
@@ -64,10 +64,10 @@ public class AppController {
 	 */
 	@PostMapping("/user/login")
 	public ResponseMessage<String> userLogin(@RequestParam String account,@RequestParam String password) {
-		NUser user = new NUser();
-		user.setNAccount(account);
-		user.setNPassword(password);
-		user.setNType(UserType.APP);
+		User user = new User();
+		user.setAccount(account);
+		user.setPwd(password);
+		user.setType(UserType.APP);
 		return supportServiceClient.userLogin(user);
 	}
 
@@ -77,10 +77,10 @@ public class AppController {
 	 */
 	@PostMapping("/user/regist")
 	public ResponseMessage<String> userRegist(@RequestParam String account,@RequestParam String password) {
-		NUser user = new NUser();
-		user.setNAccount(account);
-		user.setNPassword(password);
-		user.setNType(UserType.APP);
+		User user = new User();
+		user.setAccount(account);
+		user.setPwd(password);
+		user.setType(UserType.APP);
 		return supportServiceClient.userRegist(user);
 	}
 

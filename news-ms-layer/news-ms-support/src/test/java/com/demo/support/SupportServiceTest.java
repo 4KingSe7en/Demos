@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.demo.user.controller.NUserController;
-import com.demo.user.entity.NUser;
+import com.demo.user.controller.UserController;
+import com.demo.user.entity.User;
 import com.demo.web.ResponseMessage;
 
 /**
@@ -22,22 +22,22 @@ import com.demo.web.ResponseMessage;
 public class SupportServiceTest {
 	
 	@Autowired
-	NUserController userController;
+	UserController userController;
 	
 	@Test
 	public void userLoginTest() {
-		NUser user = new NUser();
-		user.setNAccount("larry");
-		user.setNPassword("123456");
+		User user = new User();
+		user.setAccount("larry");
+		user.setPwd("123456");
 		ResponseMessage<String> resp = userController.userLogin(user);
 		assertNotNull(resp);
 	}
 	
 	@Test
 	public void userRegistTest() {
-		NUser user = new NUser();
-		user.setNAccount("larry");
-		user.setNPassword("123456");
+		User user = new User();
+		user.setAccount("larry");
+		user.setPwd("123456");
 		ResponseMessage<String> resp = userController.userRegist(user);
 		assertNotNull(resp);
 	}

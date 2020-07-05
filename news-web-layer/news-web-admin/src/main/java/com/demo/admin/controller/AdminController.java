@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.news.entity.NNews;
+import com.demo.news.entity.News;
 import com.demo.news.feign.ContentServiceClient;
 import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
@@ -35,7 +35,7 @@ public class AdminController {
 	 * @return
 	 */
 	@GetMapping("/news")
-	public ResponseMessage<PageResultEntity<List<NNews>>> getNewsList(
+	public ResponseMessage<PageResultEntity<List<News>>> getNewsList(
 			@RequestParam(defaultValue = "1") Integer pageNum, 
             @RequestParam(defaultValue = "10") Integer pageSize){
 		
@@ -48,7 +48,7 @@ public class AdminController {
 	 * @return
 	 */
 	@PatchMapping("/news")
-	public ResponseMessage<String> addNews(@RequestBody NNews news){
+	public ResponseMessage<String> addNews(@RequestBody News news){
 		
 		return contentServiceClient.addNews(news);
 	}
@@ -58,7 +58,7 @@ public class AdminController {
 	 * @return
 	 */
 	@PutMapping("/news")
-	public ResponseMessage<String> updateNews(@RequestBody NNews news){
+	public ResponseMessage<String> updateNews(@RequestBody News news){
 		
 		return contentServiceClient.updateNews(news);
 	}
@@ -78,7 +78,7 @@ public class AdminController {
 	 * @return
 	 */
 	@GetMapping("/news/{id}")
-	public ResponseMessage<NNews> getNews(@PathVariable("id") Long id){
+	public ResponseMessage<News> getNews(@PathVariable("id") Long id){
 		
 		return contentServiceClient.getNews(id);
 	}

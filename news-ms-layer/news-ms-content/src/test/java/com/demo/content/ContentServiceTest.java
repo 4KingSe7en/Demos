@@ -14,8 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.demo.news.controller.NNewsController;
-import com.demo.news.entity.NNews;
+import com.demo.news.controller.NewsController;
+import com.demo.news.entity.News;
 import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -33,7 +33,7 @@ public class ContentServiceTest {
 	Logger logger = LoggerFactory.getLogger(ContentServiceTest.class);
 	
 	@Autowired
-	NNewsController newsController;
+	NewsController newsController;
 	
 	@Autowired
 	DiscoveryClient client;
@@ -52,16 +52,16 @@ public class ContentServiceTest {
 	 */
 	@Test
 	public void getNewsListTest() {
-		ResponseMessage<PageResultEntity<List<NNews>>> resp = newsController.getNewsList(1, 10);
+		ResponseMessage<PageResultEntity<List<News>>> resp = newsController.getNewsList(1, 10);
 		assertNotNull(resp);
 	}
 	
 	@Test
 	public void addNewsTest() {
-		NNews news = new NNews();
-		news.setNTag("111");
-		news.setNTitle("test");
-		news.setNContent("this is test");
+		News news = new News();
+		news.setTag("111");
+		news.setTitle("test");
+		news.setContent("this is test");
 		ResponseMessage<String> resp = newsController.addNews(news);
 		assertNotNull(resp);
 		assertTrue(resp.getCode() == 200);
@@ -69,11 +69,11 @@ public class ContentServiceTest {
 	
 	@Test
 	public void updateNewsTest() {
-		NNews news = new NNews();
-		news.setNId(200l);
-		news.setNTag("111");
-		news.setNTitle("test");
-		news.setNContent("this is test");
+		News news = new News();
+		news.setUuid(200l);
+		news.setTag("111");
+		news.setTitle("test");
+		news.setContent("this is test");
 		ResponseMessage<String> resp = newsController.updateNews(news);
 		assertNotNull(resp);
 		assertTrue(resp.getCode() == 200);
@@ -87,7 +87,7 @@ public class ContentServiceTest {
 	
 	@Test
 	public void getNewsTest() {
-		ResponseMessage<NNews> resp = newsController.getNews(200L);
+		ResponseMessage<News> resp = newsController.getNews(200L);
 		assertNotNull(resp);
 	}
 

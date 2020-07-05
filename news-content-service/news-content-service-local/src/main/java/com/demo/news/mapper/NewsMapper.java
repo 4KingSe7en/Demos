@@ -1,7 +1,7 @@
 package com.demo.news.mapper;
 
-import com.demo.news.entity.NNews;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.demo.news.entity.News;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Larry_lee
  * @since 2020-07-04
  */
-public interface NNewsMapper extends BaseMapper<NNews> {
+public interface NewsMapper extends BaseMapper<News> {
 
 }

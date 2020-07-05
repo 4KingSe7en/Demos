@@ -1,0 +1,9 @@
+server:
+  port: 8673
+
+#spring:
+#  #use config center
+#  cloud:
+#    config:
+#      uri: http://127.0.0.1:8672
+#      label: master

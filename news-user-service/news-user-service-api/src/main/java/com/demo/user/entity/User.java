@@ -1,15 +1,17 @@
 package com.demo.user.entity;
-import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.demo.user.enmu.UserType;
 
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,56 +23,70 @@ import lombok.experimental.Accessors;
  * @author Larry_lee
  * @since 2020-07-04
  */
+
+// TODO:FIX request body null
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class NUser implements Serializable {
+@TableName(value = "n_user")
+public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1L;
 
     /**
      * uuid
      */
-    @TableId(type = IdType.AUTO)
-    private Long nId;
+    @TableId(type = IdType.AUTO,value = "n_id")
+    private Long uuid;
 
     /**
      * user account
      */
     @NotBlank(message = "Account is require")
 	@Size(min = 6,max = 20, message = "account length must between [6,20]")
-    private String nAccount;
+    @TableField(value = "n_account")
+    private String account;
 
     /**
      * user password
      */
+    // TODO:FIX reserved word
     @NotBlank(message = "Password is require")
     @Size(min = 6,max = 20, message = "password length must between [6,20]")
-    private String nPassword;
+    @TableField(value = "n_password")
+    private String pwd;
 
     /**
      * user type
      */
-    private UserType nType  = UserType.APP;
+    @EnumValue
+    @TableField(value = "n_type")
+    private UserType type  = UserType.APP;
 
     /**
      * createtime
      */
-    private LocalDateTime nCreate;
+    // TODO:FIX reserved word
+    @TableField(value = "n_create")
+    private Date created;
 
     /**
      * create by
      */
-    private String nCreateBy;
+    @TableField(value = "n_create_by")
+    private String createBy;
 
     /**
      * modify time
      */
-    private Date nModified;
+    @TableField(value = "n_modified")
+    private Date modified;
 
     /**
      * modify by
      */
-    private String nModifiedBy;
-
+    @TableField(value = "n_modified_by")
+    private String modifiedBy;
+    
 }

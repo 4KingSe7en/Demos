@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.admin.controller.AdminController;
-import com.demo.news.entity.NNews;
+import com.demo.news.entity.News;
 import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
 
@@ -29,34 +29,34 @@ public class AdminControllerTest {
 
 	@Test
 	public void getNewsListTest() {
-		ResponseMessage<PageResultEntity<List<NNews>>> resp = adminController.getNewsList(1,10);
+		ResponseMessage<PageResultEntity<List<News>>> resp = adminController.getNewsList(1,10);
 		assertNotNull(resp);
 	}
 	
 	@Test
 	public void addNewsTest() {
-		NNews news = new NNews();
-		news.setNTag("1test");
-		news.setNTitle("test1111");
-		news.setNContent("this is test content");
+		News news = new News();
+		news.setTag("1test");
+		news.setTitle("test1111");
+		news.setContent("this is test content");
 		ResponseMessage<String> resp = adminController.addNews(news);
 		assertNotNull(resp);
 	}
 	
 	@Test
 	public void updateNewsTest() {
-		NNews news = new NNews();
-		news.setNId(2l);
-		news.setNTag("1test");
-		news.setNTitle("test1111");
-		news.setNContent("this is test content");
+		News news = new News();
+		news.setUuid(2l);
+		news.setTag("1test");
+		news.setTitle("test1111");
+		news.setContent("this is test content");
 		ResponseMessage<String> resp = adminController.updateNews(news);
 		assertNotNull(resp);
 	}
 	
 	@Test
 	public void getNewsTest() {
-		ResponseMessage<NNews> resp = adminController.getNews(2l);
+		ResponseMessage<News> resp = adminController.getNews(2l);
 		assertNotNull(resp);
 	}
 	

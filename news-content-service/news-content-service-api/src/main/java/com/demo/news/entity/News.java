@@ -1,12 +1,15 @@
 package com.demo.news.entity;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,7 +24,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class NNews implements Serializable {
+@TableName(value = "n_news")
+public class News implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,44 +33,52 @@ public class NNews implements Serializable {
      * news id
      */
     @TableId(value = "n_id", type = IdType.AUTO)
-    private Long nId;
+    private Long uuid;
 
     /**
      * news title
      */
     @NotBlank(message = "Title is require")
 	@Size(min = 1,max = 20, message = "title length must between [1,40]")
-    private String nTitle;
+    @TableField(value = "n_title")
+    private String title;
 
     /**
      * news tag
      */
-    private String nTag;
+    @TableField(value = "n_tag")
+    private String tag;
 
     /**
      * news content
      */
     @NotBlank(message = "Title is require")
-    private String nContent;
+    @TableField(value = "n_content")
+    private String content;
 
     /**
      * news create time
      */
-    private LocalDateTime nCreate;
+    // TODO:FIX reserved word
+    @TableField(value = "n_create")
+    private Date created;
 
     /**
      * news create by
      */
-    private String nCreateBy;
+    @TableField(value = "n_create_by")
+    private String createBy;
 
     /**
      * new modified time
      */
-    private LocalDateTime nModified;
+    @TableField(value = "n_modified")
+    private Date modified;
 
     /**
      * new modified by
      */
-    private String nModifiedBy;
+    @TableField(value = "n_modified_by")
+    private String modifiedBy;
 
 }

@@ -1,6 +1,6 @@
 package com.demo.user.mapper;
 
-import com.demo.user.entity.NUser;
+import com.demo.user.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Larry_lee
  * @since 2020-07-04
  */
-public interface NUserMapper extends BaseMapper<NUser> {
+public interface UserMapper extends BaseMapper<User> {
 
 }

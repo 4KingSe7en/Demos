@@ -1,0 +1,9 @@
+server:
+  port: 8679
+spring:
+  application:
+    name: ms-content
+  cloud:
+    config:
+      uri: http://127.0.0.1:8672
+      label: master

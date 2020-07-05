@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.demo.news.entity.NNews;
-import com.demo.news.service.INNewsService;
+import com.demo.news.entity.News;
+import com.demo.news.service.INewsService;
 import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
 
@@ -34,22 +34,22 @@ import com.demo.web.ResponseMessage;
  */
 @RestController
 @RequestMapping("/news")
-public class NNewsController {
+public class NewsController {
 	
 	@Autowired
-	INNewsService newsService;
+	INewsService newsService;
 	
 	/**
 	 * get news List
 	 * @return
 	 */
 	@GetMapping("/list")
-	public ResponseMessage<PageResultEntity<List<NNews>>> getNewsList(
+	public ResponseMessage<PageResultEntity<List<News>>> getNewsList(
             @RequestParam(defaultValue = "1") Integer pageNum, 
             @RequestParam(defaultValue = "10") Integer pageSize){
-		Page<NNews> page = new Page<>(pageNum, pageSize);
-		IPage<NNews> listNews = this.newsService.page(page, new QueryWrapper<NNews>(new NNews()));
-		return ResponseMessage.ok(new PageResultEntity<List<NNews>>((int) listNews.getCurrent(), (int) listNews.getSize(), listNews.getRecords(),
+		Page<News> page = new Page<>(pageNum, pageSize);
+		IPage<News> listNews = this.newsService.page(page, new QueryWrapper<News>(new News()));
+		return ResponseMessage.ok(new PageResultEntity<List<News>>((int) listNews.getCurrent(), (int) listNews.getSize(), listNews.getRecords(),
 				(int) listNews.getTotal()));
 	}
 	
@@ -59,18 +59,10 @@ public class NNewsController {
 	 * @return
 	 */
 	@PatchMapping
-	public ResponseMessage<String> addNews(@Validated @RequestBody NNews news){
+	public ResponseMessage<String> addNews(@Validated @RequestBody News news){
 		// add news
-		NNews realNews = newsService.query()
-				.eq("n_id", news.getNId())
-				.getEntity();
-		if(realNews == null) {
-			return ResponseMessage.error(" cann't find news[" + news.getNId() + "]");
-		} else {
-			newsService.save(news);
-			return ResponseMessage.ok();
-		}
-		
+		newsService.save(news);
+		return ResponseMessage.ok();
 		
 	}
 	
@@ -79,9 +71,9 @@ public class NNewsController {
 	 * @return
 	 */
 	@PutMapping
-	public ResponseMessage<String> updateNews(@Validated @RequestBody NNews news){
+	public ResponseMessage<String> updateNews(@Validated @RequestBody News news){
 		// update news
-		Objects.nonNull(news.getNId());
+		Objects.nonNull(news.getUuid());
 		
 		newsService.save(news);
 		return ResponseMessage.ok();
@@ -102,7 +94,7 @@ public class NNewsController {
 	 * @return
 	 */
 	@GetMapping("/{id}")
-	public ResponseMessage<NNews> getNews(@PathVariable("id") Long id){
+	public ResponseMessage<News> getNews(@PathVariable("id") Long id){
 		return ResponseMessage.ok(newsService.getById(id));
 	}
 

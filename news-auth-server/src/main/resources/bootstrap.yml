@@ -1,7 +1,7 @@
 server:
-  port: 8673
+  port: 8674
   jwt.secret: Crayon
-  
+
 spring:
   #use config center
   cloud:

@@ -1,8 +1,10 @@
 server:
   port: 8674
   jwt.secret: Crayon
-
+  
 spring:
+  application:
+    name: auth-server
   #use config center
   cloud:
     config:

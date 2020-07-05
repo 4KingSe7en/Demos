@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,8 @@ public class NewsController {
 	@Autowired
 	INewsService newsService;
 	
+	@Autowired(required = false)
+	ElasticsearchTemplate esTemplate;
 	/**
 	 * get news List
 	 * @return
@@ -47,6 +50,18 @@ public class NewsController {
 	public ResponseMessage<PageResultEntity<List<News>>> getNewsList(
             @RequestParam(defaultValue = "1") Integer pageNum, 
             @RequestParam(defaultValue = "10") Integer pageSize){
+//		 如果没时间写就先查询库，
+//		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+//				// .withQuery(matchQuery("title", word ))
+//				.withPageable(PageRequest.of(pageNum, pageSize))
+//				.withHighlightFields(new HighlightBuilder.Field("title")
+//				.preTags("<em>").postTags("</em>"))
+//				.build();
+//
+//		AggregatedPage<News> newsList = esTemplate.queryForPage(searchQuery, News.class);
+//		return ResponseMessage.ok(new PageResultEntity<List<News>>((int) newsList.getNumber(), (int) newsList.getSize(), newsList.get().collect(Collectors.toList()),
+//				(int) newsList.getTotalElements()));
+
 		Page<News> page = new Page<>(pageNum, pageSize);
 		IPage<News> listNews = this.newsService.page(page, new QueryWrapper<News>(new News()));
 		return ResponseMessage.ok(new PageResultEntity<List<News>>((int) listNews.getCurrent(), (int) listNews.getSize(), listNews.getRecords(),

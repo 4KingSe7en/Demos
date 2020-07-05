@@ -3,6 +3,8 @@ server:
   jwt.secret: Crayon
   
 spring:
+  application:
+    name: api-gateway
   #use config center
   cloud:
     config:

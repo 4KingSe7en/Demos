@@ -4,12 +4,6 @@
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -19,5 +13,29 @@
 *.tar.gz
 *.rar
 
+# 
+LOG_FILE_IS_UNDEFINED
+*/LOG_FILE_IS_UNDEFINED
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# eclipse idea
+/.settings/
+/.classpath
+/.project
+/.factorypath
+/.idea
+**/.idea
+# sub module
+**/logs/
+**/.settings/
+**/.classpath
+**/.project
+**/.factorypath
+# target
+*/target
+**/target
+*/.settings/
+/*.iml
+**/*.iml

@@ -1,0 +1,20 @@
+server:
+  port: 8672
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/4KingSe7en/Demo-configs     # git repo
+          username:                                           # Git username
+          password:                                           # Git password
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.hostname}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/

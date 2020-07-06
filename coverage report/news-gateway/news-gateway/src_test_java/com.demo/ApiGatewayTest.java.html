@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ApiGatewayTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ApiGatewayTest (2020-7-6 17:26:16)</a> &gt; <a href="../../index.html" class="el_group">news-gateway</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.demo</a> &gt; <span class="el_source">ApiGatewayTest.java</span></div><h1>ApiGatewayTest.java</h1><pre class="source lang-java linenums">package com.demo;
+
+import static org.junit.Assert.assertEquals;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.MultiValueMap;
+
+import com.google.gson.GsonBuilder;
+
+/**
+ * 
+ * @author Larry_lee
+ * @since 2020-07-03
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = DEFINED_PORT)
+<span class="fc" id="L33">public class ApiGatewayTest {</span>
+
+<span class="fc" id="L35">	Logger logger = LoggerFactory.getLogger(ApiGatewayTest.class);</span>
+
+	@Autowired
+	private TestRestTemplate restTemplate;
+
+	@Test
+	public void apiAvailable() {
+<span class="fc" id="L42">		Map&lt;String, String&gt; user = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L43">		user.put(&quot;account&quot;, &quot;sph&quot;);</span>
+<span class="fc" id="L44">		user.put(&quot;password&quot;, &quot;111&quot;);</span>
+<span class="fc" id="L45">		user.put(&quot;userType&quot;, &quot;APP&quot;);</span>
+		@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L47">		ResponseEntity&lt;Map&gt; entity = restTemplate.postForEntity(&quot;/login&quot;, new GsonBuilder().create().toJson(user),</span>
+<span class="fc" id="L48">				Map.class);</span>
+<span class="fc" id="L49">		logger.info(&quot;resp : {}&quot;, entity);</span>
+		// 因为是单元测试服务没起
+<span class="fc" id="L51">		assertEquals(HttpStatus.NOT_FOUND, entity.getStatusCode());</span>
+<span class="fc" id="L52">	}</span>
+
+	@Test
+	public void registTest() {
+<span class="fc" id="L56">		Map&lt;String, String&gt; user = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L57">		user.put(&quot;account&quot;, &quot;sph&quot;);</span>
+<span class="fc" id="L58">		user.put(&quot;password&quot;, &quot;111&quot;);</span>
+<span class="fc" id="L59">		user.put(&quot;userType&quot;, &quot;APP&quot;);</span>
+		@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L61">		ResponseEntity&lt;Map&gt; entity = restTemplate.postForEntity(&quot;/user/regist&quot;, new GsonBuilder().create().toJson(user),</span>
+<span class="fc" id="L62">				Map.class);</span>
+<span class="fc" id="L63">		logger.info(&quot;resp : {}&quot;, entity);</span>
+<span class="nc" id="L64">		assertEquals(HttpStatus.NOT_FOUND, entity.getStatusCode());</span>
+<span class="nc" id="L65">	}</span>
+
+	@Test
+	public void webAppTest() {
+		@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L70">		ResponseEntity&lt;Map&gt; entity = restTemplate.getForEntity(&quot;/app/news&quot;, Map.class);</span>
+<span class="fc" id="L71">		logger.info(&quot;resp : {}&quot;, entity);</span>
+<span class="fc" id="L72">		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());</span>
+<span class="fc" id="L73">	}</span>
+
+	@Test
+	public void webAppHeaderTest() {
+<span class="fc" id="L77">		HttpHeaders header = new HttpHeaders();</span>
+<span class="fc" id="L78">		header.add(&quot;Authorization&quot;, &quot;Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTUEgiLCJuYW1lIjoic3BoIiwiZXhwIjoxNTk0MDE4NTEyLCJpYXQiOjE1OTQwMTU1MTJ9.ggSvcUvELjZ3omawGHFYPIqbCp0lowx73G1PPOf3Xj8&quot;);</span>
+<span class="fc" id="L79">		HttpEntity&lt;MultiValueMap&lt;String, String&gt;&gt; httpEntity = new HttpEntity&lt;&gt;(header);</span>
+		@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L81">		ResponseEntity&lt;Map&gt; entity = restTemplate.exchange(&quot;/app/news&quot;,HttpMethod.GET,httpEntity, Map.class);</span>
+<span class="fc" id="L82">		logger.info(&quot;resp : {}&quot;, entity);</span>
+<span class="nc" id="L83">		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());</span>
+<span class="nc" id="L84">	}</span>
+
+	@Test
+	public void webAdminTest() {
+		@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L89">		ResponseEntity&lt;Map&gt; entity = restTemplate.getForEntity(&quot;/admin/news&quot;, Map.class);</span>
+<span class="fc" id="L90">		logger.info(&quot;resp : {}&quot;, entity);</span>
+<span class="fc" id="L91">		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());</span>
+<span class="fc" id="L92">	}</span>
+
+	@Test
+	public void webAdminHeaderTest() {
+<span class="fc" id="L96">		HttpHeaders header = new HttpHeaders();</span>
+<span class="fc" id="L97">		header.add(&quot;Authorization&quot;, &quot;Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTUEgiLCJuYW1lIjoic3BoIiwiZXhwIjoxNTk0MDE4NTEyLCJpYXQiOjE1OTQwMTU1MTJ9.ggSvcUvELjZ3omawGHFYPIqbCp0lowx73G1PPOf3Xj8&quot;);</span>
+<span class="fc" id="L98">		HttpEntity&lt;MultiValueMap&lt;String, String&gt;&gt; httpEntity = new HttpEntity&lt;&gt;(header);</span>
+		@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L100">		ResponseEntity&lt;Map&gt; entity = restTemplate.exchange(&quot;/admin/news&quot;,HttpMethod.GET,httpEntity, Map.class);</span>
+<span class="fc" id="L101">		logger.info(&quot;resp : {}&quot;, entity);</span>
+<span class="nc" id="L102">		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());</span>
+<span class="nc" id="L103">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>ApiGatewayTest (2020-7-6 17:26:16)</div></body></html>

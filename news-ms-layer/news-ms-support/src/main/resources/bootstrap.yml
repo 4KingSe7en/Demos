@@ -1,0 +1,10 @@
+server:
+  port: 8678
+spring:
+  application:
+    name: ms-support
+#use config center
+  cloud:
+    config:
+      uri: http://127.0.0.1:8672
+      label: master

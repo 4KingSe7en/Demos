@@ -1,0 +1,12 @@
+server:
+  port: 8673
+  jwt.secret: Crayon
+  
+spring:
+  application:
+    name: api-gateway
+  #use config center
+  cloud:
+    config:
+      uri: http://127.0.0.1:8672
+      label: master

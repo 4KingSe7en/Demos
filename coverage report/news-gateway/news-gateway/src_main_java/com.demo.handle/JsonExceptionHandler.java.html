@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>JsonExceptionHandler.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ApiGatewayTest (2020-7-6 17:26:16)</a> &gt; <a href="../../index.html" class="el_group">news-gateway</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.demo.handle</a> &gt; <span class="el_source">JsonExceptionHandler.java</span></div><h1>JsonExceptionHandler.java</h1><pre class="source lang-java linenums">package com.demo.handle;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.boot.autoconfigure.web.ErrorProperties;
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
+import org.springframework.boot.web.reactive.error.ErrorAttributes;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.reactive.function.server.RequestPredicates;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
+
+/**
+ * 
+ * @author Larry_lee
+ * @since
+ */
+public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
+
+	public JsonExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
+			ErrorProperties errorProperties, ApplicationContext applicationContext) {
+<span class="fc" id="L27">		super(errorAttributes, resourceProperties, errorProperties, applicationContext);</span>
+<span class="fc" id="L28">	}</span>
+
+	@Override
+	protected Map&lt;String, Object&gt; getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
+<span class="fc" id="L32">		int code = 500;</span>
+<span class="fc" id="L33">		Throwable error = super.getError(request);</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (error instanceof org.springframework.cloud.gateway.support.NotFoundException) {</span>
+<span class="fc" id="L35">			code = 404;</span>
+		}
+<span class="fc" id="L37">		return response(code, this.buildMessage(request, error));</span>
+	}
+
+	@Override
+	protected RouterFunction&lt;ServerResponse&gt; getRoutingFunction(ErrorAttributes errorAttributes) {
+<span class="fc" id="L42">		return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse);</span>
+	}
+
+	@Override
+	protected HttpStatus getHttpStatus(Map&lt;String, Object&gt; errorAttributes) {
+<span class="fc" id="L47">		int statusCode = (int) errorAttributes.get(&quot;code&quot;);</span>
+<span class="fc" id="L48">		return HttpStatus.valueOf(statusCode);</span>
+	}
+
+	private String buildMessage(ServerRequest request, Throwable ex) {
+<span class="fc" id="L52">		StringBuilder message = new StringBuilder(&quot;Failed to handle request [&quot;);</span>
+<span class="fc" id="L53">		message.append(request.methodName());</span>
+<span class="fc" id="L54">		message.append(&quot; &quot;);</span>
+<span class="fc" id="L55">		message.append(request.uri());</span>
+<span class="fc" id="L56">		message.append(&quot;]&quot;);</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (ex != null) {</span>
+<span class="fc" id="L58">			message.append(&quot;: &quot;);</span>
+<span class="fc" id="L59">			message.append(ex.getMessage());</span>
+		}
+<span class="fc" id="L61">		return message.toString();</span>
+	}
+
+	public static Map&lt;String, Object&gt; response(int status, String errorMessage) {
+<span class="fc" id="L65">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L66">		map.put(&quot;code&quot;, status);</span>
+<span class="fc" id="L67">		map.put(&quot;message&quot;, errorMessage);</span>
+<span class="fc" id="L68">		map.put(&quot;data&quot;, null);</span>
+<span class="fc" id="L69">		return map;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>ApiGatewayTest (2020-7-6 17:26:16)</div></body></html>

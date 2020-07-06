@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AppControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AppControllerTest (2020-7-6 17:33:08)</a> &gt; <a href="../../index.html" class="el_group">news-web-app</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.demo.app</a> &gt; <span class="el_source">AppControllerTest.java</span></div><h1>AppControllerTest.java</h1><pre class="source lang-java linenums">package com.demo.app;
+
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.demo.app.controller.AppController;
+import com.demo.app.controller.AppUserController;
+import com.demo.news.entity.News;
+import com.demo.news.feign.ContentServiceClient;
+import com.demo.param.PageResultEntity;
+import com.demo.user.enmu.UserType;
+import com.demo.user.entity.User;
+import com.demo.user.feign.SupportServiceClient;
+import com.demo.web.ResponseMessage;
+
+/**
+ * app controller test
+ * @author Larry_lee
+ * @since 2020-07-04
+ */
+@SpringBootTest(classes = AppApplication.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+<span class="fc" id="L38">public class AppControllerTest {</span>
+	
+<span class="fc" id="L40">	Logger logger = LoggerFactory.getLogger(AppControllerTest.class);</span>
+	
+	@InjectMocks
+	@Autowired
+	AppController appController;
+	
+	@InjectMocks
+	AppUserController userController;
+	
+	@Mock
+	SupportServiceClient supportServiceClient;
+	
+	@Mock
+	ContentServiceClient contentServiceClient;
+	
+	@Before
+	public void setUp() {
+<span class="fc" id="L57">		MockitoAnnotations.initMocks(this);</span>
+<span class="fc" id="L58">	}</span>
+
+	@Test
+	public void getNewsListTest() {
+<span class="fc" id="L62">		int pageNum = 1;</span>
+<span class="fc" id="L63">		int pageSize = 10;</span>
+<span class="fc" id="L64">		List&lt;News&gt; newsList = new ArrayList&lt;News&gt;();</span>
+<span class="fc" id="L65">		News news = new News();</span>
+<span class="fc" id="L66">		news.setUuid(1L);</span>
+<span class="fc" id="L67">		news.setTitle(&quot;test&quot;);</span>
+<span class="fc" id="L68">		news.setTag(&quot;test&quot;);</span>
+<span class="fc" id="L69">		news.setContent(&quot;this is test&quot;);</span>
+<span class="fc" id="L70">		newsList.add(news);</span>
+		
+<span class="fc" id="L72">		PageResultEntity&lt;List&lt;News&gt;&gt; pageList = new PageResultEntity&lt;List&lt;News&gt;&gt;(pageNum,pageSize,newsList,1);</span>
+<span class="fc" id="L73">		when(contentServiceClient.getNewsList(pageNum, pageSize)).thenReturn(ResponseMessage.ok(pageList));</span>
+		
+<span class="fc" id="L75">		ResponseMessage&lt;PageResultEntity&lt;List&lt;News&gt;&gt;&gt; resp = appController.getNewsList(pageNum,pageSize);</span>
+<span class="fc" id="L76">		logger.info(&quot;{}&quot;,resp);</span>
+<span class="fc" id="L77">		assertNotNull(resp);</span>
+<span class="fc" id="L78">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L79">	}</span>
+	
+	@Test
+	public void getNewsTest() {
+<span class="fc" id="L83">		News news = new News();</span>
+<span class="fc" id="L84">		news.setUuid(2L);</span>
+<span class="fc" id="L85">		news.setTag(&quot;1test&quot;);</span>
+<span class="fc" id="L86">		news.setTitle(&quot;test1111&quot;);</span>
+<span class="fc" id="L87">		news.setContent(&quot;this is test content&quot;);</span>
+<span class="fc" id="L88">		when(contentServiceClient.getNews(2L)).thenReturn(ResponseMessage.ok(news));</span>
+		
+<span class="fc" id="L90">		ResponseMessage&lt;News&gt; resp = appController.getNewsDetail(2L);</span>
+<span class="fc" id="L91">		logger.info(&quot;{}&quot;,resp);</span>
+<span class="fc" id="L92">		assertNotNull(resp);</span>
+<span class="fc" id="L93">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L94">	}</span>
+	
+	@Test
+	public void userRegistTest() {
+		
+<span class="fc" id="L99">		User sysUser = new User();</span>
+<span class="fc" id="L100">		sysUser.setAccount(&quot;111&quot;);</span>
+<span class="fc" id="L101">		sysUser.setPwd(&quot;123&quot;);</span>
+<span class="fc" id="L102">		sysUser.setType(UserType.APP);</span>
+<span class="fc" id="L103">		when(supportServiceClient.userRegist(sysUser)).thenReturn(ResponseMessage.ok(&quot;nice&quot;));</span>
+		
+<span class="fc" id="L105">		ResponseMessage&lt;String&gt; resp = userController.userRegist(sysUser);</span>
+<span class="fc" id="L106">		logger.info(&quot;{}&quot;,resp);</span>
+<span class="fc" id="L107">		assertNotNull(resp);</span>
+<span class="fc" id="L108">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L109">	}</span>
+	
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>AppControllerTest (2020-7-6 17:33:08)</div></body></html>

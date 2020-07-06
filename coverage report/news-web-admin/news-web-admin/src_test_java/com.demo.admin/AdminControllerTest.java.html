@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AdminControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AdminControllerTest (2020-7-6 17:31:44)</a> &gt; <a href="../../index.html" class="el_group">news-web-admin</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.demo.admin</a> &gt; <span class="el_source">AdminControllerTest.java</span></div><h1>AdminControllerTest.java</h1><pre class="source lang-java linenums">package com.demo.admin;
+
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.demo.admin.controller.AdminController;
+import com.demo.news.entity.News;
+import com.demo.news.feign.ContentServiceClient;
+import com.demo.param.PageResultEntity;
+import com.demo.web.ResponseMessage;
+
+/**
+ * admin controller test
+ * @author Larry_lee
+ * @since 2020-07-04
+ */
+@SpringBootTest(classes = AdminApplication.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+<span class="fc" id="L34">public class AdminControllerTest {</span>
+	
+<span class="fc" id="L36">	Logger logger = LoggerFactory.getLogger(AdminControllerTest.class);</span>
+	
+	@InjectMocks
+	@Autowired
+	AdminController adminController;
+	
+	@Mock
+	ContentServiceClient contentServiceClient;
+	
+	@Before
+	public void setUp() {
+<span class="fc" id="L47">		MockitoAnnotations.initMocks(this);</span>
+<span class="fc" id="L48">	}</span>
+	
+	@Test
+	public void getNewsListTest() {
+<span class="fc" id="L52">		int pageNum = 1;</span>
+<span class="fc" id="L53">		int pageSize = 10;</span>
+<span class="fc" id="L54">		List&lt;News&gt; newsList = new ArrayList&lt;News&gt;();</span>
+<span class="fc" id="L55">		News news = new News();</span>
+<span class="fc" id="L56">		news.setUuid(1L);</span>
+<span class="fc" id="L57">		news.setTitle(&quot;test&quot;);</span>
+<span class="fc" id="L58">		news.setTag(&quot;test&quot;);</span>
+<span class="fc" id="L59">		news.setContent(&quot;this is test&quot;);</span>
+<span class="fc" id="L60">		newsList.add(news);</span>
+		
+<span class="fc" id="L62">		PageResultEntity&lt;List&lt;News&gt;&gt; pageList = new PageResultEntity&lt;List&lt;News&gt;&gt;(pageNum,pageSize,newsList,1);</span>
+<span class="fc" id="L63">		when(contentServiceClient.getNewsList(pageNum, pageSize)).thenReturn(ResponseMessage.ok(pageList));</span>
+<span class="fc" id="L64">		ResponseMessage&lt;PageResultEntity&lt;List&lt;News&gt;&gt;&gt; resp = adminController.getNewsList(1,10);</span>
+<span class="fc" id="L65">		logger.info(&quot;RESP:{}&quot;,resp);</span>
+		
+<span class="fc" id="L67">		assertNotNull(resp);</span>
+<span class="fc" id="L68">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L69">	}</span>
+	
+	@Test
+	public void addNewsTest() {
+<span class="fc" id="L73">		News news = new News();</span>
+<span class="fc" id="L74">		news.setTag(&quot;1test&quot;);</span>
+<span class="fc" id="L75">		news.setTitle(&quot;test1111&quot;);</span>
+<span class="fc" id="L76">		news.setContent(&quot;this is test content&quot;);</span>
+<span class="fc" id="L77">		when(contentServiceClient.addNews(news)).thenReturn(ResponseMessage.ok(&quot;nice&quot;));</span>
+<span class="fc" id="L78">		ResponseMessage&lt;String&gt; resp = adminController.addNews(news);</span>
+<span class="fc" id="L79">		logger.info(&quot;RESP:{}&quot;,resp);</span>
+		
+<span class="fc" id="L81">		assertNotNull(resp);</span>
+<span class="fc" id="L82">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L83">	}</span>
+	
+	@Test
+	public void updateNewsTest() {
+<span class="fc" id="L87">		News news = new News();</span>
+<span class="fc" id="L88">		news.setUuid(2l);</span>
+<span class="fc" id="L89">		news.setTag(&quot;1test&quot;);</span>
+<span class="fc" id="L90">		news.setTitle(&quot;test1111&quot;);</span>
+<span class="fc" id="L91">		news.setContent(&quot;this is test content&quot;);</span>
+<span class="fc" id="L92">		when(contentServiceClient.updateNews(news)).thenReturn(ResponseMessage.ok(&quot;nice&quot;));</span>
+<span class="fc" id="L93">		ResponseMessage&lt;String&gt; resp = adminController.updateNews(news);</span>
+<span class="fc" id="L94">		logger.info(&quot;RESP:{}&quot;,resp);</span>
+		
+<span class="fc" id="L96">		assertNotNull(resp);</span>
+<span class="fc" id="L97">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L98">	}</span>
+	
+	@Test
+	public void getNewsTest() {
+<span class="fc" id="L102">		News news = new News();</span>
+<span class="fc" id="L103">		news.setUuid(2l);</span>
+<span class="fc" id="L104">		news.setTag(&quot;1test&quot;);</span>
+<span class="fc" id="L105">		news.setTitle(&quot;test1111&quot;);</span>
+<span class="fc" id="L106">		news.setContent(&quot;this is test content&quot;);</span>
+<span class="fc" id="L107">		when(contentServiceClient.getNews(2l)).thenReturn(ResponseMessage.ok(news));</span>
+<span class="fc" id="L108">		ResponseMessage&lt;News&gt; resp = adminController.getNews(2l);</span>
+<span class="fc" id="L109">		logger.info(&quot;RESP:{}&quot;,resp);</span>
+		
+<span class="fc" id="L111">		assertNotNull(resp);</span>
+<span class="fc" id="L112">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L113">	}</span>
+	
+	@Test
+	public void delNewsTest() {
+<span class="fc" id="L117">		when(contentServiceClient.deleteNews(11l)).thenReturn(ResponseMessage.ok(&quot;nice&quot;));</span>
+<span class="fc" id="L118">		ResponseMessage&lt;String&gt; resp = adminController.deleteNews(11L);</span>
+<span class="fc" id="L119">		logger.info(&quot;RESP:{}&quot;,resp);</span>
+		
+<span class="fc" id="L121">		assertNotNull(resp);</span>
+<span class="fc" id="L122">		assertNotNull(resp.getResult());</span>
+<span class="fc" id="L123">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>AdminControllerTest (2020-7-6 17:31:44)</div></body></html>

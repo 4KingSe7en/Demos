@@ -1,0 +1,23 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: service-registry
+    
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    status-page-url-path: /info
+    health-check-url-path: /health
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    serviceUrl:      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 5000
+    
+    
+

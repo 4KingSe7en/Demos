@@ -34,7 +34,7 @@ public class ConfigServerApplicationTest {
 	@Test
 	public void configurationAvailable() {
 		@SuppressWarnings("rawtypes")
-		ResponseEntity<Map> entity = restTemplate.getForEntity("/service-registry.yml", Map.class);
+		ResponseEntity<Map> entity = restTemplate.getForEntity("/service-registry/app", Map.class);
 		logger.info("resp : {}" , entity);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}

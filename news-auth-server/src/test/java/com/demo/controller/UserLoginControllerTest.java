@@ -1,5 +1,7 @@
 package com.demo.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -16,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.SimpleAuthorizationServerApplicaiton;
+import com.demo.jwt.JWTTokenGenerator;
 import com.demo.param.UserParam;
 import com.demo.user.enmu.UserType;
 import com.demo.user.entity.User;
@@ -35,6 +38,9 @@ public class UserLoginControllerTest {
 	
 	@Mock
 	SupportServiceClient supportServiceClient;
+	
+	@Autowired
+	JWTTokenGenerator generator;
 	
 	@Before
 	public void setUp() {
@@ -57,8 +63,8 @@ public class UserLoginControllerTest {
 		ResponseMessage<String> resp = userLoginController.userLogin(user);
 		logger.info("RESP:{}",resp);
 		
-		assertTrue(resp != null);
-		assertTrue(resp.getResult() != null);
+		assertNotNull(resp);
+		assertNotNull(resp.getResult());
 	}
 	
 	@Test
@@ -75,8 +81,8 @@ public class UserLoginControllerTest {
 		ResponseMessage<String> resp = userLoginController.userLogin(user);
 		logger.info("RESP:{}",resp);
 		
-		assertTrue(resp != null);
-		assertTrue(resp.getCode() != 200);
+		assertNotNull(resp);
+		assertEquals(resp.getCode(), 500);
 	}
 	
 	@Test
@@ -93,8 +99,8 @@ public class UserLoginControllerTest {
 		ResponseMessage<String> resp = userLoginController.userLogin(user);
 		logger.info("RESP:{}",resp);
 		
-		assertTrue(resp != null);
-		assertTrue(resp.getCode() != 200);
+		assertNotNull(resp);
+		assertEquals(resp.getCode(), 500);
 	}
 	
 	@Test
@@ -112,8 +118,20 @@ public class UserLoginControllerTest {
 		ResponseMessage<String> resp = userLoginController.userLogin(user);
 		logger.info("RESP:{}",resp);
 		
-		assertTrue(resp != null);
-		assertTrue(resp.getCode() == 200);
+		assertNotNull(resp);
+		assertEquals(resp.getCode(), 200);
+	}
+	
+	@Test
+	public void generateJwtTest() {
+		String account = "sph";
+		String token = generator.getOrCreat(account);
+		logger.info("Token : {}",token);
+		assertNotNull(token);
+		
+		String token2 = generator.getOrCreat(account);
+		logger.info("Token2 : {}",token);
+		assertTrue(token.equals(token2) );
 	}
 
 }

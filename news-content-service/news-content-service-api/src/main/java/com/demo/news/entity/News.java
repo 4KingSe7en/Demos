@@ -39,7 +39,7 @@ public class News implements Serializable {
      * news title
      */
     @NotBlank(message = "Title is require")
-	@Size(min = 1,max = 20, message = "title length must between [1,40]")
+	@Size(min = 1,max = 40, message = "title length must between [1,40]")
     @TableField(value = "n_title")
     private String title;
 

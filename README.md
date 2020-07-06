@@ -54,7 +54,7 @@ Code for myself
 
 ![platform](./adminseq.svg)
 
-## <a name="4">Mysql to ElasticSearch </a>
+## <a name="4">Mysql to ElasticSearch(时间有限没实现)</a>
 
 * Sequence diagram
 
@@ -129,4 +129,99 @@ Code for myself
 
 ## <a name="8">How to Run</a>
 
+    1.Create db with sql(newsdb-init.sql)
+    2.git clone https://github.com/4KingSe7en/Demos.git
+	3.mvn clean package
+	4.修改数据库配置（news-ms两个服务），redis配置（news-auth-server），配置中心目前设置的是(https://github.com/4KingSe7en/Demo-config)需要自己更改一下
+	5.java -jar news-service-registry-0.0.1-SNAPSHOT.jar #注册中心
+	6.java -jar news-config-server-0.0.1-SNAPSHOT.jar #配置中心
+	7.java -jar news-gateway-0.0.1-SNAPSHOT.jar #API 网关
+	8.java -jar news-auth-server-0.0.1-SNAPSHOT.jar #认证中心
+	9.java -jar news-web-app-0.0.1-SNAPSHOT.jar #app web接口
+	10.java -jar news-web-admin-0.0.1-SNAPSHOT.jar #admin web接口
+	11.java -jar news-ms-content-0.0.1-SNAPSHOT.jar #内容微服务接口
+	12.java -jar news-ms-support-0.0.1-SNAPSHOT.jar #支撑相关微服务接口
+
 ## <a name="9">Code coverage report</a>
+
+* <a href="./coverage%20report/news-service-registry">news-service-registry(71.4%)</a>
+* <a href="./coverage%20report/news-config-server">news-config-server(75.%)</a>
+* <a href="./coverage%20report/news-gateway">news-gateway(89.1%)</a>
+* <a href="./coverage%20report/news-auth-server">news-auth-server(74%)</a>
+* <a href="./coverage%20report/news-web.app">news-web-app(93.9%)</a>
+* <a href="./coverage%20report/news-web-admin">news-web-admin(95.5%)</a>
+* <a href="./coverage%20report/news-ms-content">news-ms-content(90%)</a>
+* <a href="./coverage%20report/news-ms-support">news-ms-support(91.2%)</a>
+
+## <a name="9">interface doc</a>
+
+	#user regist
+    curl --location --request POST 'http://127.0.0.1:8673/user/regist' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "account":"1111112",
+      "pwd":"1111111",
+      "type":"APP"
+    }'
+
+
+	#user login
+    curl --location --request POST 'http://127.0.0.1:8673/login' \
+	--header 'Content-Type: application/json' \
+	--data-raw '{
+	  	"account":"1111112",
+	  	"password":"1111111",
+	  	"type":"APP"
+	}'
+    
+	#app user search
+	curl --location --request GET 'http://127.0.0.1:8673/app/news' \
+	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoiMTExMTExMiIsImV4cCI6MTU5NDA0MDMzNiwiaWF0IjoxNTk0MDM3MzM2fQ.wB_VkPhmcuF-1ZyEU-zAV52pYa8ns-d53rVfOPKQI6o' \
+	--header 'Content-Type: application/json' \
+
+	#app user getNews
+	curl --location --request GET 'http://127.0.0.1:8673/app/news/1' \
+	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoiMTExMTExMiIsImV4cCI6MTU5NDA0MDMzNiwiaWF0IjoxNTk0MDM3MzM2fQ.wB_VkPhmcuF-1ZyEU-zAV52pYa8ns-d53rVfOPKQI6o' \
+	--header 'Content-Type: application/json' \
+
+	#Admin search
+	curl --location --request GET 'http://127.0.0.1:8673/admin/news/1' \
+	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoiMTExMTExMiIsImV4cCI6MTU5NDA0MDMzNiwiaWF0IjoxNTk0MDM3MzM2fQ.wB_VkPhmcuF-1ZyEU-zAV52pYa8ns-d53rVfOPKQI6o' \
+	--header 'Content-Type: application/json' \
+
+	#Admin getNews
+	curl --location --request GET 'http://127.0.0.1:8673/admin/news/1' \
+	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoiMTExMTExMiIsImV4cCI6MTU5NDA0MDMzNiwiaWF0IjoxNTk0MDM3MzM2fQ.wB_VkPhmcuF-1ZyEU-zAV52pYa8ns-d53rVfOPKQI6o' \
+	--header 'Content-Type: application/json' \
+
+	#Admin NEW
+	curl --location --request PUT 'http://127.0.0.1:8673/admin/news/' \
+	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoic3BoIiwiZXhwIjoxNTk0MDQ2MDY5LCJpYXQiOjE1OTQwNDMwNjl9.VD4YPdMAOqhPBkanj54Zg41zdnztSp52jQDfWnO42zU' \
+	--header 'Content-Type: application/json' \
+	--data-raw '{
+	    "title": "O111",
+	    "tag": "222221111",
+	    "content": "TH12312321"
+	}'
+
+    #Admin update
+	curl --location --request PUT 'http://127.0.0.1:8673/admin/news/' \
+	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoic3BoIiwiZXhwIjoxNTk0MDQ2MDY5LCJpYXQiOjE1OTQwNDMwNjl9.VD4YPdMAOqhPBkanj54Zg41zdnztSp52jQDfWnO42zU' \
+	--header 'Content-Type: application/json' \
+	--data-raw '{
+	    "uuid":20,
+	    "title": "O33333",
+	    "tag": "222221111",
+	    "content": "TH12312321"
+	}'
+	
+	#Admin delete
+	curl --location --request DELETE 'http://127.0.0.1:8673/admin/news/1' \
+	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoic3BoIiwiZXhwIjoxNTk0MDQ2MDY5LCJpYXQiOjE1OTQwNDMwNjl9.VD4YPdMAOqhPBkanj54Zg41zdnztSp52jQDfWnO42zU' \
+	--header 'Content-Type: application/json' \
+	--data-raw '{
+	    "title": "Open Source Search: The Creators of",
+	    "tag": "https://www.elastic.co",
+	    "content": "Elasticsearch, Kibana, Beats, and Logstash. Securely and reliably search, analyze, and visualize your data in the cloud or on-prem."
+	}'
+

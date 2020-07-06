@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.demo.news.entity.News;
@@ -32,7 +31,8 @@ public interface ContentServiceClient {
 	 * 
 	 * @return
 	 */
-	@PatchMapping("/news")
+	// TODO:fix patch not support
+	@PostMapping("/news/add")
 	ResponseMessage<String> addNews(News news);
 
 	/**
@@ -40,7 +40,7 @@ public interface ContentServiceClient {
 	 * 
 	 * @return
 	 */
-	@PutMapping("/news")
+	@PostMapping("/news/save")
 	ResponseMessage<String> updateNews(News news);
 
 	/**

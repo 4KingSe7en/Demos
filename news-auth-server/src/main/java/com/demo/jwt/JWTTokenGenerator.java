@@ -47,6 +47,7 @@ public class JWTTokenGenerator {
 			Date now = new Date();
 			token = JWT.create().withIssuer(simpleIssuer)
 					.withIssuedAt(now)
+					.withSubject("SPH")
 					.withExpiresAt(DateUtils.addSeconds(now, expireTime))
 					.withClaim(USER_CLAIM, account)
 					.sign(algorithm);

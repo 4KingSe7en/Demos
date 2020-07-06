@@ -45,5 +45,6 @@ CREATE TABLE `n_user`  (
   `n_create_by` varchar(50)  NULL DEFAULT NULL COMMENT 'create by',
   `n_modified` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'modify time',
   `n_modified_by` varchar(50)  NULL DEFAULT NULL COMMENT 'modify by',
-  PRIMARY KEY (`n_id`) USING BTREE
+  PRIMARY KEY (`n_id`) USING BTREE,
+  UNIQUE INDEX `in_account`(`n_account`) USING BTREE
 ) ENGINE = InnoDB ;

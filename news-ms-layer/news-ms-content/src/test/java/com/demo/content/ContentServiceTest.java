@@ -1,9 +1,12 @@
 package com.demo.content;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,14 +14,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.news.controller.NewsController;
 import com.demo.news.entity.News;
 import com.demo.param.PageResultEntity;
 import com.demo.web.ResponseMessage;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 
 
 /**
@@ -26,7 +31,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
  * @author Larry_lee
  * @since 2020-07-04
  */
-@SpringBootTest(classes = ContentApplication.class)
+@SpringBootTest(classes = ContentApplication.class,webEnvironment = DEFINED_PORT)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ContentServiceTest {
 	
@@ -36,16 +41,7 @@ public class ContentServiceTest {
 	NewsController newsController;
 	
 	@Autowired
-	DiscoveryClient client;
-	
-	@Test
-	public void serviceDiscoveryTest() {
-		List<ServiceInstance> instances = client.getInstances("ms-content");
-		instances.forEach(inst -> {
-			logger.info("services -> {}:{}:{}", inst.getServiceId(), inst.getHost(), inst.getPort());
-			System.out.println("services -> " + inst.getServiceId() + ":" + inst.getHost() + ":" + inst.getPort());
-		});
-	}
+	TestRestTemplate restTemplate;
 	
 	/**
 	 * news list test
@@ -54,6 +50,9 @@ public class ContentServiceTest {
 	public void getNewsListTest() {
 		ResponseMessage<PageResultEntity<List<News>>> resp = newsController.getNewsList(1, 10);
 		assertNotNull(resp);
+		assertNotNull(resp.getResult());
+		logger.info("resp:{}",resp);
+		
 	}
 	
 	@Test
@@ -63,32 +62,47 @@ public class ContentServiceTest {
 		news.setTitle("test");
 		news.setContent("this is test");
 		ResponseMessage<String> resp = newsController.addNews(news);
+		logger.info("resp:{}",resp);
 		assertNotNull(resp);
 		assertTrue(resp.getCode() == 200);
+		logger.info("resp:{}",resp);
 	}
 	
 	@Test
 	public void updateNewsTest() {
 		News news = new News();
-		news.setUuid(200l);
+		news.setUuid(2l);
 		news.setTag("111");
 		news.setTitle("test");
 		news.setContent("this is test");
 		ResponseMessage<String> resp = newsController.updateNews(news);
+		logger.info("resp:{}",resp);
 		assertNotNull(resp);
 		assertTrue(resp.getCode() == 200);
+		logger.info("resp:{}",resp);
 	}
 	
 	@Test
 	public void deleteNewsTest() {
-		ResponseMessage<String> resp = newsController.deleteNews(200L);
+		ResponseMessage<String> resp = newsController.deleteNews(5L);
+		logger.info("resp:{}",resp);
 		assertNotNull(resp);
 	}
 	
 	@Test
 	public void getNewsTest() {
-		ResponseMessage<News> resp = newsController.getNews(200L);
+		ResponseMessage<News> resp = newsController.getNews(4L);
+		logger.info("resp:{}",resp);
 		assertNotNull(resp);
+		
+	}
+	
+	@Test
+	public void serviceExceptionHandlerTest() {
+		@SuppressWarnings("rawtypes")
+		ResponseEntity<Map> entity = restTemplate.exchange("/news", HttpMethod.PATCH, null, Map.class);
+		logger.info("resp : {}", entity);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());
 	}
 
 }

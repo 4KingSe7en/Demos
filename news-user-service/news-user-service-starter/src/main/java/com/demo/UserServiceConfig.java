@@ -19,9 +19,4 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableCaching
 public class UserServiceConfig {
 	
-	@ConditionalOnMissingBean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(8);
-	}
-
 }

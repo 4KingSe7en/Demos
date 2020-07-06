@@ -2,7 +2,6 @@ package com.demo.user.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,9 +68,4 @@ public class UserController {
 		
 	}
 	
-	public static void main(String[] args) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
-		System.out.println(encoder.encode("123456"));;
-	}
-
 }

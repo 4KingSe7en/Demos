@@ -75,6 +75,8 @@ public class NewsController {
 	 */
 	@PatchMapping
 	public ResponseMessage<String> addNews(@Validated @RequestBody News news){
+		Objects.nonNull(news);
+		Objects.nonNull(news.getTitle());
 		// add news
 		newsService.save(news);
 		return ResponseMessage.ok();
@@ -88,7 +90,9 @@ public class NewsController {
 	@PutMapping
 	public ResponseMessage<String> updateNews(@Validated @RequestBody News news){
 		// update news
+		Objects.nonNull(news);
 		Objects.nonNull(news.getUuid());
+		Objects.nonNull(news.getTitle());
 		
 		newsService.save(news);
 		return ResponseMessage.ok();
@@ -100,6 +104,7 @@ public class NewsController {
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseMessage<String> deleteNews(@PathVariable("id") Long id){
+		Objects.nonNull(id);
 		newsService.removeById(id);
 		return ResponseMessage.ok();
 	}
@@ -110,6 +115,7 @@ public class NewsController {
 	 */
 	@GetMapping("/{id}")
 	public ResponseMessage<News> getNews(@PathVariable("id") Long id){
+		Objects.nonNull(id);
 		return ResponseMessage.ok(newsService.getById(id));
 	}
 

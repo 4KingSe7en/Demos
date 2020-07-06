@@ -24,6 +24,11 @@ import com.demo.web.ResponseMessage;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * Jwt token Filter
+ * @author Larry_lee
+ * @since 2020-07-05
+ */
 @Component
 public class JWTFilter extends AbstractNameValueGatewayFilterFactory {
 

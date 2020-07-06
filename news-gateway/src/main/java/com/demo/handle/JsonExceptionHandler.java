@@ -16,9 +16,9 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 /**
- * 
+ * 处理异常返回
  * @author Larry_lee
- * @since
+ * @since 2020-07-06
  */
 public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
 

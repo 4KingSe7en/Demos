@@ -55,7 +55,7 @@ public class AdminController {
 	}
 	
 	/**
-	 * add news
+	 * update news
 	 * @return
 	 */
 	@PutMapping("/news")

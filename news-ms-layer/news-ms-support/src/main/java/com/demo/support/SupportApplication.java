@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Support micro service
+ * @author Larry_lee
+ * @since 2020-07-05
+ */
 @EnableCaching
 @EnableFeignClients
 @SpringBootApplication

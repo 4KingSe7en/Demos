@@ -25,6 +25,11 @@ import com.demo.user.entity.User;
 import com.demo.user.feign.SupportServiceClient;
 import com.demo.web.ResponseMessage;
 
+/**
+ * Login test
+ * @author Larry_lee
+ * @since 2020-07-06
+ */
 @SpringBootTest(classes = SimpleAuthorizationServerApplicaiton.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserLoginControllerTest {

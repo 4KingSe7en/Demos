@@ -12,9 +12,9 @@ import com.demo.user.feign.SupportServiceClient;
 import com.demo.web.ResponseMessage;
 
 /**
- * 
- * @author Administrator
- *
+ * User regist
+ * @author Larry_lee
+ * @since 2020-07-05
  */
 @RestController
 @RequestMapping("/user")

@@ -85,4 +85,10 @@ public class ResponseMessage<T> implements Serializable{
 		this.code = code;
 	}
 
+	@Override
+	public String toString() {
+		return "ResponseMessage [message=" + message + ", result=" + result + ", timestamp=" + timestamp + ", code="
+				+ code + "]";
+	}
+	
 }

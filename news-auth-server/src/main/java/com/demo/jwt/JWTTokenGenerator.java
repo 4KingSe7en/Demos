@@ -25,7 +25,7 @@ public class JWTTokenGenerator {
 	@Autowired
 	Algorithm algorithm;
 
-	@Value("${server.jwt.expire:300}")
+	@Value("${server.jwt.expire:3000}")
 	int expireTime;
 
 	@Autowired

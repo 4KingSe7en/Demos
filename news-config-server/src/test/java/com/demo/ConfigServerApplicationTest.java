@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -24,13 +26,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(webEnvironment = DEFINED_PORT)
 public class ConfigServerApplicationTest {
 	
+	Logger logger = LoggerFactory.getLogger(ConfigServerApplicationTest.class);
+	
 	@Autowired
 	private TestRestTemplate restTemplate;
 
 	@Test
 	public void configurationAvailable() {
 		@SuppressWarnings("rawtypes")
-		ResponseEntity<Map> entity = restTemplate.getForEntity("/service-registry/defaut", Map.class);
+		ResponseEntity<Map> entity = restTemplate.getForEntity("/service-registry.yml", Map.class);
+		logger.info("resp : {}" , entity);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}
 

@@ -1,7 +1,5 @@
 package com.demo.controller;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -48,6 +46,7 @@ public class UserLoginControllerTest {
 		UserParam user = new UserParam();
 		user.setAccount("sph");
 		user.setPassword("111");
+		user.setUserType(UserType.APP.name());
 		
 		User sysUser = new User();
 		sysUser.setAccount(user.getAccount());
@@ -60,35 +59,42 @@ public class UserLoginControllerTest {
 		
 		assertTrue(resp != null);
 		assertTrue(resp.getResult() != null);
-		
-		ResponseMessage<String> resp1 = userLoginController.userLogin(user);
-		logger.info("RESP1:{}",resp1);
-		assertTrue(resp1 != null);
-		assertTrue(resp1.getResult() != null);
-		assertTrue(resp1.getResult() == resp.getResult());
 	}
 	
 	@Test
 	public void loginWithoutAccountTest() {
 		UserParam user = new UserParam();
 		user.setPassword("111");
-		try {
-			userLoginController.userLogin(user);
-		} catch (Exception e) {
-			assertNotNull(e);
-		}
 		
+		User sysUser = new User();
+		sysUser.setAccount(user.getAccount());
+		sysUser.setPwd(user.getPassword());
+		sysUser.setType(UserType.valueOf(user.getUserType()));
+		
+		when(supportServiceClient.userLogin(sysUser)).thenReturn(ResponseMessage.error("account is require"));
+		ResponseMessage<String> resp = userLoginController.userLogin(user);
+		logger.info("RESP:{}",resp);
+		
+		assertTrue(resp != null);
+		assertTrue(resp.getCode() != 200);
 	}
 	
 	@Test
 	public void loginWithoutPasswordTest() {
 		UserParam user = new UserParam();
 		user.setAccount("sph");
-		try {
-			userLoginController.userLogin(user);
-		} catch (Exception e) {
-			assertNotNull(e);
-		}
+		
+		User sysUser = new User();
+		sysUser.setAccount(user.getAccount());
+		sysUser.setPwd(user.getPassword());
+		sysUser.setType(UserType.valueOf(user.getUserType()));
+		
+		when(supportServiceClient.userLogin(sysUser)).thenReturn(ResponseMessage.error("password is require"));
+		ResponseMessage<String> resp = userLoginController.userLogin(user);
+		logger.info("RESP:{}",resp);
+		
+		assertTrue(resp != null);
+		assertTrue(resp.getCode() != 200);
 	}
 	
 	@Test
@@ -96,8 +102,18 @@ public class UserLoginControllerTest {
 		UserParam user = new UserParam();
 		user.setAccount("sph");
 		user.setPassword("111");
+		
+		User sysUser = new User();
+		sysUser.setAccount(user.getAccount());
+		sysUser.setPwd(user.getPassword());
+		sysUser.setType(UserType.valueOf(user.getUserType()));
+		
+		when(supportServiceClient.userLogin(sysUser)).thenReturn(ResponseMessage.ok("nice"));
 		ResponseMessage<String> resp = userLoginController.userLogin(user);
-		assertFalse(resp != null);
+		logger.info("RESP:{}",resp);
+		
+		assertTrue(resp != null);
+		assertTrue(resp.getCode() == 200);
 	}
 
 }

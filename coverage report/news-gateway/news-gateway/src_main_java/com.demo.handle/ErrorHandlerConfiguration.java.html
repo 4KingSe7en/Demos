@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ErrorHandlerConfiguration.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ApiGatewayTest (2020-7-6 17:26:16)</a> &gt; <a href="../../index.html" class="el_group">news-gateway</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.demo.handle</a> &gt; <span class="el_source">ErrorHandlerConfiguration.java</span></div><h1>ErrorHandlerConfiguration.java</h1><pre class="source lang-java linenums">package com.demo.handle;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.reactive.error.ErrorAttributes;
+import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.codec.ServerCodecConfigurer;
+import org.springframework.web.reactive.result.view.ViewResolver;
+
+/**
+ * 
+ * @param errorAttributes
+ * @return
+ */
+@Configuration
+@EnableConfigurationProperties({ServerProperties.class, ResourceProperties.class})
+public class ErrorHandlerConfiguration {
+
+    private final ServerProperties serverProperties;
+
+    private final ApplicationContext applicationContext;
+
+    private final ResourceProperties resourceProperties;
+
+    private final List&lt;ViewResolver&gt; viewResolvers;
+
+    private final ServerCodecConfigurer serverCodecConfigurer;
+
+<span class="fc" id="L39">    public ErrorHandlerConfiguration(ServerProperties serverProperties,</span>
+                                     ResourceProperties resourceProperties,
+                                     ObjectProvider&lt;List&lt;ViewResolver&gt;&gt; viewResolversProvider,
+                                     ServerCodecConfigurer serverCodecConfigurer,
+                                     ApplicationContext applicationContext) {
+<span class="fc" id="L44">        this.serverProperties = serverProperties;</span>
+<span class="fc" id="L45">        this.applicationContext = applicationContext;</span>
+<span class="fc" id="L46">        this.resourceProperties = resourceProperties;</span>
+<span class="fc" id="L47">        this.viewResolvers = viewResolversProvider.getIfAvailable(Collections::emptyList);</span>
+<span class="fc" id="L48">        this.serverCodecConfigurer = serverCodecConfigurer;</span>
+<span class="fc" id="L49">    }</span>
+
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public ErrorWebExceptionHandler errorWebExceptionHandler(ErrorAttributes errorAttributes) {
+<span class="fc" id="L54">        JsonExceptionHandler exceptionHandler = new JsonExceptionHandler(</span>
+<span class="fc" id="L55">                errorAttributes, </span>
+<span class="fc" id="L56">                this.resourceProperties,</span>
+<span class="fc" id="L57">                this.serverProperties.getError(), </span>
+<span class="fc" id="L58">                this.applicationContext);</span>
+<span class="fc" id="L59">        exceptionHandler.setViewResolvers(this.viewResolvers);</span>
+<span class="fc" id="L60">        exceptionHandler.setMessageWriters(this.serverCodecConfigurer.getWriters());</span>
+<span class="fc" id="L61">        exceptionHandler.setMessageReaders(this.serverCodecConfigurer.getReaders());</span>
+<span class="fc" id="L62">        return exceptionHandler;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>ApiGatewayTest (2020-7-6 17:26:16)</div></body></html>

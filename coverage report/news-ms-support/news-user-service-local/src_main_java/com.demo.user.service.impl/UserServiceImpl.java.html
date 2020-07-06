@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">SupportServiceTest (2020-7-6 17:37:08)</a> &gt; <a href="../../index.html" class="el_group">news-user-service-local</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.demo.user.service.impl</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package com.demo.user.service.impl;
+
+import com.demo.user.entity.User;
+import com.demo.user.mapper.UserMapper;
+import com.demo.user.service.IUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+/**
+ * &lt;p&gt;
+ *  user service implements
+ * &lt;/p&gt;
+ *
+ * @author Larry_lee
+ * @since 2020-07-04
+ */
+@Service
+<span class="fc" id="L22">public class UserServiceImpl extends ServiceImpl&lt;UserMapper, User&gt; implements IUserService {</span>
+
+	@Override
+	public User queryUserByAccount(String account) {
+<span class="fc" id="L26">		QueryWrapper&lt;User&gt; query = new QueryWrapper&lt;User&gt;(new User());</span>
+<span class="fc" id="L27">		query.eq(&quot;n_account&quot;, account);</span>
+<span class="fc" id="L28">		List&lt;User&gt; users = this.baseMapper.selectList(query);</span>
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">		if(users != null &amp;&amp; !users.isEmpty()) {</span>
+<span class="nc" id="L30">			return users.get(0);</span>
+		}
+<span class="fc" id="L32">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>SupportServiceTest (2020-7-6 17:37:08)</div></body></html>

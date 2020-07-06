@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">SupportServiceTest (2020-7-6 17:37:08)</a> &gt; <a href="../../index.html" class="el_group">news-user-service-web</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.demo.user.controller</a> &gt; <span class="el_source">UserController.java</span></div><h1>UserController.java</h1><pre class="source lang-java linenums">package com.demo.user.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.demo.user.entity.User;
+import com.demo.user.service.IUserService;
+import com.demo.web.ResponseMessage;
+
+/**
+ * &lt;p&gt;
+ *  user controller
+ * &lt;/p&gt;
+ *
+ * @author Larry_lee
+ * @since 2020-07-04
+ */
+@RestController
+@RequestMapping(&quot;/user&quot;)
+<span class="fc" id="L26">public class UserController {</span>
+	
+	@Autowired
+	IUserService userService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
+	/**
+	 * user login 
+	 * @return
+	 */
+	@PostMapping(&quot;/login&quot;)
+	public ResponseMessage&lt;String&gt; userLogin(@Validated @RequestBody User user ){
+<span class="fc" id="L40">		User realUser = userService.queryUserByAccount(user.getAccount());</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if(realUser == null) {</span>
+<span class="fc" id="L42">			return ResponseMessage.error(&quot;account[&quot;+user.getAccount()+&quot;] not exist&quot;);</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		} else if(passwordEncoder.matches(user.getPwd(), realUser.getPwd())){</span>
+<span class="nc" id="L44">			return ResponseMessage.ok();</span>
+		}
+<span class="nc" id="L46">		return ResponseMessage.error(&quot;account or password not correct&quot;);</span>
+		
+	}
+	
+	/**
+	 * user regist 
+	 * @return
+	 */
+	@PostMapping(&quot;/regist&quot;)
+	public ResponseMessage&lt;String&gt; userRegist(@Validated @RequestBody User user){
+<span class="fc" id="L56">		int count = userService.query()</span>
+<span class="fc" id="L57">				.eq(&quot;n_account&quot;, user.getAccount())</span>
+<span class="fc" id="L58">				.count();</span>
+		// account not exist
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if(count == 0) {</span>
+<span class="nc" id="L61">			user.setPwd(passwordEncoder.encode(user.getPwd()));</span>
+<span class="nc" id="L62">			userService.save(user);</span>
+<span class="nc" id="L63">			return ResponseMessage.ok();</span>
+		} else {
+			// already exist
+<span class="fc" id="L66">			return ResponseMessage.error(&quot;account[&quot;+user.getAccount()+&quot;] already exist&quot;);</span>
+		}
+		
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>SupportServiceTest (2020-7-6 17:37:08)</div></body></html>

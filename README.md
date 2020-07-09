@@ -219,9 +219,4 @@ Code for myself
 	curl --location --request DELETE 'http://127.0.0.1:8673/admin/news/1' \
 	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoic3BoIiwiZXhwIjoxNTk0MDQ2MDY5LCJpYXQiOjE1OTQwNDMwNjl9.VD4YPdMAOqhPBkanj54Zg41zdnztSp52jQDfWnO42zU' \
 	--header 'Content-Type: application/json' \
-	--data-raw '{
-	    "title": "Open Source Search: The Creators of",
-	    "tag": "https://www.elastic.co",
-	    "content": "Elasticsearch, Kibana, Beats, and Logstash. Securely and reliably search, analyze, and visualize your data in the cloud or on-prem."
-	}'
 

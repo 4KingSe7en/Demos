@@ -185,7 +185,7 @@ Code for myself
 	--header 'Content-Type: application/json' \
 
 	#Admin search
-	curl --location --request GET 'http://127.0.0.1:8673/admin/news/1' \
+	curl --location --request GET 'http://127.0.0.1:8673/admin/news' \
 	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoiMTExMTExMiIsImV4cCI6MTU5NDA0MDMzNiwiaWF0IjoxNTk0MDM3MzM2fQ.wB_VkPhmcuF-1ZyEU-zAV52pYa8ns-d53rVfOPKQI6o' \
 	--header 'Content-Type: application/json' \
 
@@ -195,7 +195,7 @@ Code for myself
 	--header 'Content-Type: application/json' \
 
 	#Admin NEW
-	curl --location --request PUT 'http://127.0.0.1:8673/admin/news/' \
+	curl --location --request POST 'http://127.0.0.1:8673/admin/news/' \
 	--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTUEgiLCJpc3MiOiJTUEgiLCJuYW1lIjoic3BoIiwiZXhwIjoxNTk0MDQ2MDY5LCJpYXQiOjE1OTQwNDMwNjl9.VD4YPdMAOqhPBkanj54Zg41zdnztSp52jQDfWnO42zU' \
 	--header 'Content-Type: application/json' \
 	--data-raw '{
